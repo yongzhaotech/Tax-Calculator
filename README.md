@@ -26,6 +26,7 @@ src/__tests__/TaxBreakdown.test.tsx
 src/__tests__/EnterIncome.test.tsx
 
 ### execute the command `jest` to run the two test suites
+### if `jest` command is not found, try `./node_modules/.bin/jest`
 
 This application uses the following new features:
 
