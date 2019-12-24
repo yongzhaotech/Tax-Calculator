@@ -43,7 +43,7 @@ export const selectTaxBreakdown = createSelector(
   (grossIncome: string): Array<NPoints.taxBreakDown> => {
     const income: number = +(grossIncome || "0"),
       schedules: NPoints.IObject<number> = federalRateSchedules
-        .filter((schedule: NPoints.rateSchedule) => income >= schedule.lowerBound)
+        .filter((schedule: NPoints.rateSchedule) => (income <= 0 && income === schedule.lowerBound) || income > schedule.lowerBound)
         .reduce((acc: NPoints.IObject<number>, cur: NPoints.rateSchedule) =>
           income > (income > 0 ? cur.lowerBound : -1) && income <= cur.upperBound ? {
             ...acc,
