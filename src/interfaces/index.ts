@@ -1,4 +1,4 @@
-export namespace NPoints {
+export namespace NTaxCalculator {
 
   export interface IObject<T> {
     [key: string]: T;

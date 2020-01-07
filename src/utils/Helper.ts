@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
-import { NPoints } from "../interfaces";
+import { NTaxCalculator } from "../interfaces";
 
-const federalRateSchedules: Array<NPoints.rateSchedule> = [{
+const federalRateSchedules: Array<NTaxCalculator.rateSchedule> = [{
   lowerBound: 0,
   upperBound: 47630,
   rate: 15
@@ -27,24 +27,24 @@ export const isInvalidDollar = (income: string): boolean => !/^\d+$/.test(income
 
 /*
  * @description non-memoized selector to select grossIncome from redux store state
- * @param {NPoints.IStoreState} state the only arguement implicitly passed in by redux useSelector hook
+ * @param {NTaxCalculator.IStoreState} state the only arguement implicitly passed in by redux useSelector hook
  */
-export const selectGrossIncome = (state: NPoints.IStoreState) => state.grossIncome || "";
+export const selectGrossIncome = (state: NTaxCalculator.IStoreState) => state.grossIncome || "";
 
 /*
  * @description memoized selector to select grossIncome from redux store state and calculate tax breakdowns.  
  *  the transform function does the re-calculation only if the grossIncome is changed, if the grossIncome is not changed
  *  the cached result is returned without doing the expensive calculation, in the latter case the component will not be re-rendered
  *  performance wins
- * @param {NPoints.IStoreState} state the only arguement implicitly passed in by redux useSelector hook
+ * @param {NTaxCalculator.IStoreState} state the only arguement implicitly passed in by redux useSelector hook
  */
 export const selectTaxBreakdown = createSelector(
   selectGrossIncome,
-  (grossIncome: string): Array<NPoints.taxBreakDown> => {
+  (grossIncome: string): Array<NTaxCalculator.taxBreakDown> => {
     const income: number = +(grossIncome || "0"),
-      schedules: NPoints.IObject<number> = federalRateSchedules
-        .filter((schedule: NPoints.rateSchedule) => (income === 0 && income === schedule.lowerBound) || income > schedule.lowerBound)
-        .reduce((acc: NPoints.IObject<number>, cur: NPoints.rateSchedule) =>
+      schedules: NTaxCalculator.IObject<number> = federalRateSchedules
+        .filter((schedule: NTaxCalculator.rateSchedule) => (income === 0 && income === schedule.lowerBound) || income > schedule.lowerBound)
+        .reduce((acc: NTaxCalculator.IObject<number>, cur: NTaxCalculator.rateSchedule) =>
           income > (income > 0 ? cur.lowerBound : -1) && income <= cur.upperBound ? {
             ...acc,
             line2: cur.lowerBound,
@@ -53,7 +53,7 @@ export const selectTaxBreakdown = createSelector(
           } : {
               ...acc,
               line6: (cur.upperBound - cur.lowerBound) * cur.rate / 100 + (acc.line6 !== undefined ? acc.line6 : 0)
-            }, {} as NPoints.IObject<number>),
+            }, {} as NTaxCalculator.IObject<number>),
       line3: number = income - schedules.line2,
       line5: number = line3 * schedules.line4 / 100;
 
