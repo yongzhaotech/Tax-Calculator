@@ -7,7 +7,7 @@ import { NTaxCalculator } from "../interfaces";
 const TaxBreakdown: React.FunctionComponent = () => {
   const history = useHistory(),
     grossIncome: string = useSelector(selectGrossIncome),
-    taxBreakdown: Array<NTaxCalculator.taxBreakDown> = useSelector(selectTaxBreakdown);
+    taxBreakdown: Array<Array<NTaxCalculator.taxBreakDown>> = useSelector(selectTaxBreakdown);
 
   return (
     <div>
@@ -15,11 +15,19 @@ const TaxBreakdown: React.FunctionComponent = () => {
       <small className="font-weight-bold pb-2">(Annual gross income: {grossIncome})</small>
       {
         taxBreakdown
-          .map((breakdown: NTaxCalculator.taxBreakDown, idx: number) => (
-            <div className={`row p-2 ${(idx % 2) ? "bg-info" : "bg-warning"}`} key={breakdown.line}>
-              <div className="col-8">{breakdown.label}</div>
-              <div className="col-2 border-bottom border-dark">{breakdown.amount}</div>
-              <div className="col-2 font-weight-bold">{breakdown.line}</div>
+          .map((breakdown: Array<NTaxCalculator.taxBreakDown>, idx: number) => (
+            <div key={idx} className="py-3">
+              {
+                breakdown
+                  .map((taxLine: NTaxCalculator.taxBreakDown, index: number) => (
+                    <div className={`row p-2 ${(index % 2) ? "bg-info" : "bg-warning"}`} key={taxLine.line}>
+                      <div className="col-8">{taxLine.label}</div>
+                      <div className="col-2 border-bottom border-dark">{taxLine.amount}</div>
+                      <div className="col-2 font-weight-bold">{taxLine.line}</div>
+                    </div>
+                  ))
+              }
+
             </div>
           ))
       }

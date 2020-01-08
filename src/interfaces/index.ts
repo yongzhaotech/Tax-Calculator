@@ -16,7 +16,7 @@ export namespace NTaxCalculator {
   export interface taxBreakDown {
     label: string;
     line: string;
-    amount: number | string;
+    amount: any;
   }
 
   export interface rateSchedule {
