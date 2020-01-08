@@ -14,7 +14,7 @@ const config = {
   key: "points-tax-calculator",
   storage,
 },
-  store = createStore(
+  store: any = createStore(
     persistReducer(config, RootReducer)
   );
 
