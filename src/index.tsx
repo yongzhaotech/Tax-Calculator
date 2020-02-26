@@ -23,7 +23,7 @@ ReactDOM.render(
     <PersistGate loading={null} persistor={persistStore(store)}>
       <App />
     </PersistGate>
-  </Provider>,
+  </Provider >,
   document.getElementById("application-root")
 );
 

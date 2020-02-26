@@ -2,6 +2,7 @@
   "name": "pointstax",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://esaleshome.com/ads/tax",
   "dependencies": {
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
@@ -23,6 +24,7 @@
     "babel-preset-react": "^6.24.1",
     "jest-config": "^24.9.0",
     "react": "^16.8.6",
+    "react-context": "0.0.3",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.1.2",
