@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as Action from "../action";
 import { isInvalidDollar, selectGrossIncome } from "../utils/Helper";
+import Slider from "./Slider";
 
 const EnterIncome: React.FunctionComponent = () => {
   const dispatch = useDispatch(),
@@ -51,6 +52,7 @@ const EnterIncome: React.FunctionComponent = () => {
           Submit
         </button>
       </div>
+      <Slider />
     </div>
   );
 }
